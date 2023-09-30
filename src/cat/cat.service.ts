@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../shared/services/prisma.service';
 import { Prisma } from '@prisma/client';
-import { CatDto } from 'src/zod';
+// import { CatDto } from 'src/zod';
+import { Cat } from 'src/class-validators/models/Cat.model';
 
 @Injectable()
 export class CatService {
   constructor(private prisma: PrismaService) {
 
   }
-  create(createCatDto: CatDto) {
+  create(createCatDto: Cat) {
     return this.prisma.cat.create({
       data: createCatDto
     })

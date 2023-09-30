@@ -1,11 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { patchNestJsSwagger } from 'nestjs-zod';
+import { ValidationPipe } from '@nestjs/common';
+// import { patchNestJsSwagger } from 'nestjs-zod';
 
 async function bootstrap() {
-  patchNestJsSwagger();
+  // patchNestJsSwagger();
   const app = await NestFactory.create(ApplicationModule);
+
+  // app.useGlobalPipes(new ValidationPipe({ transform: true }))
+
   const options = new DocumentBuilder()
     .setTitle('NestJS App')
     .setDescription('The API description')

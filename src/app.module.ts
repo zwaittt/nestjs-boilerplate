@@ -1,10 +1,11 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, ValidationPipe } from '@nestjs/common';
 import { CatModule } from './cat/cat.module';
-import { ZodValidationPipe } from 'nestjs-zod';
-import { APP_PIPE } from '@nestjs/core';
+// import { ZodValidationPipe } from 'nestjs-zod';
+// import { APP_PIPE } from '@nestjs/core';
 import { SharedModule } from './shared/shared.module';
 import { Logger } from './middlewares/logger.middleware';
 import { SwaggerMiddleWare } from './middlewares/swagger.middleware';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [CatModule, SharedModule],
@@ -12,8 +13,16 @@ import { SwaggerMiddleWare } from './middlewares/swagger.middleware';
   providers: [
     {
       provide: APP_PIPE,
-      useClass: ZodValidationPipe,
+      useFactory: () => {
+        return new ValidationPipe({
+          transform: true,
+        })
+      },
     },
+    // {
+    //   provide: APP_PIPE,
+    //   useClass: ZodValidationPipe,
+    // },
   ],
 })
 export class ApplicationModule implements NestModule {
