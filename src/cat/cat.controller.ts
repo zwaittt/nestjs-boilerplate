@@ -2,10 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CatService } from './cat.service';
 import { ApiParam, ApiBody } from '@nestjs/swagger';
 import { CatDto } from '../zod';
+import { RedisSerive } from 'src/shared/services/redis.service';
 
 @Controller('cat')
 export class CatController {
-  constructor(private readonly catService: CatService) {}
+  constructor(private readonly catService: CatService, private readonly redis: RedisSerive) {}
 
   @Post()
   @ApiBody({ type: CatDto, description: "创建猫的参数" })
@@ -18,8 +19,16 @@ export class CatController {
   }
 
   @Get()
-  findAll() {
-    return this.catService.findAll();
+  async findAll() {
+    const val = await this.redis.get('cats_key');
+    console.log('redis: ', val);
+    if (val) {
+      return val;
+    }
+
+    const stored = await this.catService.findAll();
+    this.redis.set('cats_key', JSON.stringify(stored), 600);
+    return stored;
   }
 
   @Get(':id')

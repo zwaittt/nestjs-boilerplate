@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-18-bullseye
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+  db: 
+    image: mysql/mysql-server:8.0
+    network_mode: service:devcontainer
+  cache:
+    image: redis
+    network_mode: service:devcontainer
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
