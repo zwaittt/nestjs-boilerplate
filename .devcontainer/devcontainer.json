@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "node-ts-mysql",
+	"name": "node-ts-nest",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	// "image": "mcr.microsoft.com/devcontainers/typescript-node:1-18-bullseye",
 	// "features": {
@@ -12,6 +12,9 @@
 	// 		"version": "latest"
 	// 	}
 	"dockerComposeFile": "docker-compose.yml",
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
+	],
 	"service": "devcontainer",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
 
