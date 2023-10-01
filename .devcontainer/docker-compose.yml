@@ -9,6 +9,12 @@ services:
   db: 
     image: mysql/mysql-server:8.0
     network_mode: service:devcontainer
+    environment:
+      MYSQL_USER: prisma
+      MYSQL_DATABASE: 'nest_play'
+      MYSQL_PASSWORD: 54321
+      MYSQL_ROOT_PASSWORD: 54321
+      MYSQL_ROOT_HOST: '%'
   cache:
     image: redis
     network_mode: service:devcontainer
