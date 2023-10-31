@@ -1,14 +1,19 @@
 import { Global, Module } from "@nestjs/common";
 import { PrismaService } from "./services/prisma.service";
 import { RedisModule } from "./redis/redis.module";
-import { RedisSerive } from "./services/redis.service";
-
+import { ConfigModule } from '@nestjs/config';
+import { default as BaseConfig } from 'config/base';
 @Global()
 @Module({
-  imports: [],
-  providers: [PrismaService, RedisSerive],
+  imports: [ConfigModule.forRoot({
+    isGlobal: true,
+    load: [
+      BaseConfig
+    ]
+  }), RedisModule],
+  providers: [PrismaService],
   controllers: [],
-  exports: [PrismaService, RedisSerive],
+  exports: [PrismaService, RedisModule],
 })
 export class SharedModule {}
 

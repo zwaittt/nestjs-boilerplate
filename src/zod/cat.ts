@@ -1,7 +1,8 @@
 import * as z from "nestjs-zod/z"
 import { createZodDto } from "nestjs-zod/dto"
 
-export const CatModel = z.object({
+export const catModel = z.object({
+  id: z.number().int(),
   email: z.string().nullish(),
   name: z.string(),
   age: z.number().nullish(),
@@ -9,5 +10,5 @@ export const CatModel = z.object({
   birthTime: z.date().nullish(),
 })
 
-export class CatDto extends createZodDto(CatModel) {
+export class CatDto extends createZodDto(catModel) {
 }

@@ -5,7 +5,7 @@ import { RedisClient } from './redis.provider';
 export class RedisService {
   public constructor(
     @Inject('REDIS_CLIENT')
-    private readonly client: RedisClient,
+    public readonly client: RedisClient,
   ) {}
 
   async set(key: string, value: string, expirationSeconds: number) {
